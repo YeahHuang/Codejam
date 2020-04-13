@@ -1,0 +1,155 @@
+//#include <bits/stdc++.h>
+#include <iostream>
+#include <cassert>
+#include <cstring>
+#include <cstdlib>
+#include <cstdio>
+#include <cctype>
+#include <cmath>
+#include <ctime>
+#include <queue>
+#include <set>
+#include <map>
+#include <stack>
+#include <string>
+#include <bitset>
+#include <vector>
+#include <complex>
+#include <algorithm>
+#include <unordered_map>
+#include <memory.h>
+#include <set>
+#include <functional>
+using namespace std;
+
+
+
+#define ll long long
+#define pii pair<int, int>
+#define pb push_back
+#define pli pair<ll, int>
+#define pil pair<int, ll>
+#define clr(a, x) memset(a, x, sizeof(a))
+#define sz(a) (int)a.size()
+#define debug(a) cout << #a << ": " << a << endl
+#define debuga1(a, l, r) fto(i, l, r) cout << a[i] << " "; cout << endl
+#define fdto(i, r, l) for(int i = (r); i > (l); --i)
+#define fto(i, l, r) for(int i = (l); i < (r); ++i)
+
+const double pi = acos(-1.0);
+const int INF = 0x3f3f3f3f;
+const int MOD = 1e9 + 7;
+const double EPS = 1e-9;
+
+double fRand(double fMin, double fMax)
+{
+    double f = (double)rand() / RAND_MAX;
+    return fMin + f * (fMax - fMin);
+}
+
+template <class T>
+T min(T a, T b, T c) {
+    return min(a, min(b, c));
+}
+
+template <class T>
+T max(T a, T b, T c) {
+    return max(a, max(b, c));
+}
+/*
+9:52 - 
+
+r*c competitors + A cutting-edge automated judge for the competition.
+
+
+
+每个一格子 不动 到eliminate之前
+
+comapass neighbor of x, y 同一行/列 中间没了 [0..4]
+
+d's level strictly < avg(d's neighbor) 
+ 那么d排除 
+
+interest level： sum(each round 即使下一轮它走了也算)
+
+小数据集： 硬算
+
+*/
+
+
+const int N = 1e3 + 10; // 这样更好 防止下面弄着弄着就少了个0
+ll q,p1,p2,ans,T,  m,n,cnt,  l,r;
+bool flag;
+bool exist[N][N];
+ll s[N][N];
+bool debugg = false;
+bool test = true;
+const int NOTEXIST = -1;
+
+int main(){
+    ios_base::sync_with_stdio(0);
+    cin>>T;
+    int dx[4] = {-1,1,0,0};
+    int dy[4] = {0,0,-1,1};
+    fto(it,0,T){
+        cin>>m>>n;
+        ll summ = 0;
+        fto(i,0,101)
+            fto(j,0,101)
+                exist[i][j] = false;
+        fto(i,0,m)
+            fto(j,0,n){
+                cin>>s[i][j];
+                exist[i][j] = true;
+                summ += s[i][j];
+            } 
+        ans = 0;  
+        fto(step, 0, 100){
+            if (debugg){
+                debug(step);
+                debug(summ);
+            }
+            ans += summ;
+            vector<int> toDelete;
+            toDelete.clear();
+            fto(i,0,m)
+                fto(j,0,n)
+                    if (exist[i][j]){
+                        int cntC = 0;
+                        ll sumC = 0;
+                        fto(dir, 0, 4){
+                            int tx = i + dx[dir];
+                            int ty = j + dy[dir];
+                            while (tx>=0 && tx < m && ty>=0 && ty < n && exist[tx][ty] == false){
+                                tx += dx[dir];
+                                ty += dy[dir];
+                            } 
+                            if (tx>=0 && tx < m && ty>=0 && ty < n)
+                            {
+                                sumC += s[tx][ty];
+                                cntC += 1;
+                            }
+                        }
+                        if (cntC * s[i][j] < sumC){ // delete i,j
+                            toDelete.push_back(i*100 + j);
+                            summ -= s[i][j];
+                        };
+                    } 
+
+            if (toDelete.size()==0){
+                break;
+            }else{
+                for (auto num: toDelete){
+                    exist[num/100][num%100] = false;
+                    if (debugg) {
+                        cout<<"To delete "<<num/m<<" "<<num%m<<endl;
+                    }
+                }
+            }
+
+        }
+        
+    
+        cout << "Case #" << it + 1 << ": "<<ans<<endl;
+    }
+}
