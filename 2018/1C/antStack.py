@@ -23,12 +23,22 @@ dp[i][j] 到前i个 我pick了j层
 
 if w[i]*6 >= dp[i-1][pick-1] 
     dp[i][pick] =  min(dp[i-1][pick], dp[i-1][pick-1] + w)
-    
+
+
 
 6:27 - 6:37 submit  大的会MLE
 
-6:43 submit 大的会TLE
+6:43 改成了pre cur 的版本 submit 大的会TLE   solve_large()
+    说明T=100 其中6个 N=1e5 * 1e3 左右是会TLE的 15s限时
 
+7:23 写成了 有限制的pre版本 solve_extra_large 
+   mLen = 50 WA
+7:25 mLen = 500 TLE
+7:27 mLen = 200 TLE
+7:29 mLen = 100 AC!!!!!! 
+
+像这种i+1 由i决定 怕影响的可以倒着写 参考Syloviaely-antStack.cpp  for  for (int j=lim;j>=0;j--)
+            if (dp[j]<=6ll*w[i]) dp[j+1]=min(dp[j+1],dp[j]+w[i]);
 """
 global debug
 
@@ -70,7 +80,7 @@ def solve_extra_large(n, w): #n*n
     maxi_pick = 1
     MAXI = float('inf')
     pre = [0,w[0]]
-    mLen = 100 #50 WA 200, 500 TLE
+    mLen = 100
     start = n 
     for i in range(1, n):
         pre.append(MAXI)
