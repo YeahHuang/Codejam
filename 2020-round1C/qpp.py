@@ -322,6 +322,13 @@ class BIT:
             idx -= idx & -idx
         return sum
 
+segmentation tree 发现python TLE c++就能过
+参考自己的diverseSubarray_large
+或者https://leetcode.com/problems/range-sum-query-mutable/discuss/75784/python-well-commented-solution-using-segment-trees
+
+带lazy propagation https://leetcode.com/articles/a-recursive-approach-to-segment-trees-range-sum-queries-lazy-propagation/
+其实还是用下载的c++的吧
+
 d = {"banana":3, 'apple':4, 'pear':1, 'orange':2};
 
 >>> # dictionary sorted by length of the key string
@@ -359,3 +366,23 @@ bisect_insort_right()
 heapq.heapify(sticks)
 heapq.heappop(sticks)
 heapq.heappush(sticks, p1+p2)
+
+2020/05/01
+1. 变量名要清晰
+2. 大数据集要大胆猜测 / 小数据集模拟找规律 
+3. 我发现对我来说 先把small过了 还挺有用的 心态大法好（官方说 写一个暴力的小的 然后观察结果 经常对大的很有帮助哦）
+4. 因为debug信息没删除WA一次
+5. 有读题30min的题 一定不要光想 先写起来呀
+6. 随机化大法好 贪心顺序etc random.randlist(l, r) [l,r]均包含 random.shuffle(list) ;   
+    有时候可以枚举random次数  16cjIO shuffle 1000次->3000次就过了
+7. 一开始就很懵 不想去下手 后来发现其实是有规律的（不变 / reverse / 01互换 / reverse+01互换） 耐心！耐心！再耐心！
+8. WA: while (N[i] >= S[idx] && idx < S.size())  显然应该先判断大小呀； 反过来后又写错了 >= 写成了 > 要谨慎呀～～ 
+9. 交互题 str(int(round(x[5])))(一开始没加这个 心态崩了 其实是可以做出来的 只要跟踪一下输出结果就OK了)
+    细心读题啊！读题～～ 大的数据集关键是要发现输出是mod 2^64 这个特殊点 所以剩下的那就是依次输出即可
+10. 花了6min查sublime变光标 是 command + option +o
+11. chr ord 之类的用dict来表示 可能更清晰
+12. hit[c] = hit.get(c,0) + 1 defaultdict的默认初始值✌️
+trie如果不行的话 可以参照 bundling_trie_large.cpp
+
+
+sum(a==b for a,b in zip(secret, guess))
