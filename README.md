@@ -13,7 +13,7 @@ Below is the summary of the competitions I participated.
 
         round1B          16      3328/6539         50.89%
         
-        round1C           68      969/9505          10.19% (top 1500 contestants advance to round2)
+        round1C           68      958/9463          10.12% (top 1500 contestants advance to round2)
         
 
         
